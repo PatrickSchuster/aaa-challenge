@@ -1,0 +1,9 @@
+*,
+:root {
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  border-bottom: 1px solid gainsboro;
+}
