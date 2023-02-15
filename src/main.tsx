@@ -5,6 +5,6 @@ import "./i18n";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <App></App>
   </React.StrictMode>
 );

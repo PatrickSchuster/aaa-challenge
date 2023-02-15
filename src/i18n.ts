@@ -12,15 +12,25 @@ i18next
         translation: {
           welcome: "Welcome",
           million: "million",
-          deutschland: "Germany"
+          deutschland: "Germany",
+          niederlande: "Netherlands",
+          england: "England",
+          spanien: "Spain",
+          frankreich: "France",
+          österreich: "Austria",
         },
       },
       de: {
         translation: {
-            welcome: "Willkommen bruder",
-            million: "Millionen",
-            deutschland: "Deutschland"
+          welcome: "Willkommen",
+          million: "Millionen",
+          deutschland: "Deutschland",
+          Niederlande: "Niderlande",
+          england: "England",
+          spanien: "Spanien",
+          frankreich: "Frankreich",
+          österreich: "Österreich",
         },
-      }
+      },
     },
   });
