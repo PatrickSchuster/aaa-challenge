@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Routes,
-  Route,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { withTranslation } from "react-i18next";
 import {
@@ -19,13 +14,13 @@ import {
   Typography,
   IconButton,
   CircularProgress,
-  Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SortIcon from "@mui/icons-material/Sort";
 import { IClub } from "./interfaces/club";
 import { TFunction } from "i18next";
 import Details from "./components/Details";
+import fetchData from "./fetch/fetch-data";
 
 interface IProps {
   t: TFunction;
@@ -49,8 +44,6 @@ class App extends React.Component<IProps, IState> {
     };
   }
 
-  BASE_URL = new URL("https://public.allaboutapps.at/hiring/clubs.json");
-
   componentDidMount() {
     this.fetchClubs();
   }
@@ -59,15 +52,13 @@ class App extends React.Component<IProps, IState> {
     this.setState({
       isLoading: true,
     });
-    fetch(this.BASE_URL)
-      .then((response) => response.json())
-      .then((json) => {
+    fetchData()
+      .then((clubs) => {
         this.setState({
-          clubs: this.clubsMap(json),
+          clubs,
         });
       })
       .catch((err) => {
-        console.error(err);
         this.setState({
           hasError: true,
         });
@@ -88,7 +79,6 @@ class App extends React.Component<IProps, IState> {
   }
 
   assembleList() {
-    const { t } = this.props;
     const sorted =
       this.state.sortByNameDesc === true
         ? [...this.state.clubs.values()].sort((club1, club2) =>
@@ -97,13 +87,6 @@ class App extends React.Component<IProps, IState> {
         : [...this.state.clubs.values()].sort(
             (club1, club2) => club2.value - club1.value
           );
-    if (this.state.isLoading === true) {
-      return (
-        <div className="loading-wrapper">
-          <CircularProgress />
-        </div>
-      );
-    }
     return sorted.map((club) => {
       return (
         <Link to={`details/${club.id}`} key={club.id} className="link">
@@ -146,6 +129,13 @@ class App extends React.Component<IProps, IState> {
   }
 
   render() {
+    if (this.state.isLoading === true) {
+      return (
+        <div className="loading-wrapper">
+          <CircularProgress />
+        </div>
+      );
+    }
     const { t } = this.props;
     this.assembleList();
     const theme = createTheme({
